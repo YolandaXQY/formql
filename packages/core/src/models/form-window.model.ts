@@ -1,5 +1,5 @@
 import { FormPage } from './form-page.model';
-import { FormComponent } from './form-component.model';
+import { FormComponent, ComponentControl } from './form-component.model';
 import { FormGroup } from '@angular/forms';
 
 export interface FormWindow {
@@ -23,6 +23,7 @@ export interface FormState {
     form: FormWindow;
     reactiveForm: FormGroup;
     components: FormComponent<any>[];
+    formControls: ComponentControl[];
     ids: Array<string>;
     isLoading: boolean;
     error: any;

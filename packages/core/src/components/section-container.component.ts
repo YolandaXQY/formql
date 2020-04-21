@@ -23,7 +23,7 @@ import { StoreService } from '../services/store.service';
         (synchronise)="synchroniseModel($event)">
         <ng-container *ngFor="let component of components; trackBy: trackByFn">
             <div formql-component-container
-                [ngClass]="{'fql-component-container-hidden': component.rules?.hidden?.value}"
+                [ngClass]="{'fql-component-container-hidden': !isComponentHidden(component)}"
                 [component]="component"
                 [sectionId]="section.sectionId"
                 [value]="component.value"
@@ -33,7 +33,7 @@ import { StoreService } from '../services/store.service';
     </div>
     <div *ngIf="!(mode === FormQLMode.Edit)">
         <ng-container *ngFor="let component of components; trackBy: trackByFn">
-            <div formql-component-container *ngIf="!component.rules?.hidden?.value"
+            <div formql-component-container *ngIf="!isComponentHidden(component)"
                 [component]="component"
                 [sectionId]="section.sectionId"
                 [value]="component.value"
@@ -98,5 +98,19 @@ export class SectionContainerComponent implements OnInit {
         });
 
         return columnComponents;
+    }
+
+    public isComponentHidden(c: FormComponent<any>) {
+        let hidden = false;
+        if (!c.rules || !Array.isArray(c.rules)) { 
+            return hidden;
+        }
+        const hiddenRule = c.rules.find(x => x.key === 'hidden');
+        if (hiddenRule) {
+            // console.log(hiddenRule.conditionValue);
+            return Boolean(hiddenRule.conditionValue);
+        } else {
+            return hidden;
+        }
     }
 }

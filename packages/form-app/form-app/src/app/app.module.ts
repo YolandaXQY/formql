@@ -18,12 +18,17 @@ import { AppFormQLComponent } from './app-formql.component';
 import { AppFormQLEditorComponent } from './app-formql-editor.component';
 import { TextMaskModule } from 'angular2-text-mask';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormqlDynamicWarapperComponent } from './formql-dynamic-warapper/formql-dynamic-warapper.component';
+import { FormqlDynamicComponent } from './formql-dynamic-warapper/formql-dynamic/formql-dynamic.component';
+import { DynamicFormqlService } from './service/dynamic-formql.service';
 
 @NgModule({
     declarations: [
         AppComponent,
         AppFormQLComponent,
-        AppFormQLEditorComponent
+        AppFormQLEditorComponent,
+        FormqlDynamicComponent,
+        FormqlDynamicWarapperComponent
     ],
     imports: [
         BrowserModule,
@@ -35,7 +40,10 @@ import { ReactiveFormsModule } from '@angular/forms';
         TextMaskModule,
         ReactiveFormsModule
     ],
-    providers: [DummyService, { provide: 'FormQLService', useClass: DummyService }],
+    providers: [
+        // DummyService, { provide: 'FormQLService', useClass: DummyService }
+        DynamicFormqlService, { provide: 'FormQLService', useClass: DynamicFormqlService}
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

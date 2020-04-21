@@ -1,0 +1,6 @@
+
+<nz-spin [nzSpinning]="loading">
+    <app-formql-dynamic-warapper>
+        <formql [mode]="mode" [formStructureData]="layout" [formData]="data" (onSaveEvent)="save($event)"></formql>
+    </app-formql-dynamic-warapper>
+</nz-spin>

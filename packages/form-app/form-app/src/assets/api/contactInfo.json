@@ -7,365 +7,526 @@
         "query": "{ contact(id: $id) { id firstName lastName email mobile addressLine1 addressLine2 addressCity addressPostCode } } ",
         "mutation": "mutation { updateContact(contact: ${contact}) { id: id firstName: firstName lastName: lastName email: email mobile: mobile addressPostCode:addressPostCode addressLine1:addressLine1 addressLine2:addressLine2 addressCity:addressCity  } }"
     },
-    "pages": [{
-        "structure": "12",
-        "template": {
-            "title": "header",
-            "body": {
-                "gridTemplateColumns": "1fr 1fr",
-                "gridTemplateRows": "",
-                "gridTemplateAreas": "\"ID1_1 ID1_2\" \"ID2_1 ID2_2\""
-            },
-            "reRender": false
-        },
-        "sections": [{
-            "components": [{
-                "schema": "contact.lastName",
-                "label": "Contact Info",
-                "componentName": "FormQLLabelComponent",
-                "type": "text",
-                "order": 1,
-                "position": {
-                    "id": "ID1_1",
-                    "index": 1,
-                    "type": 1
-                },
-                "componentId": "0af1e87f-19fe-e6e0-80ca-f1d512b889ec",
-                "rules": {},
-                "value": null,
-                "style": {
-                    "padding": "0px",
-                    "margin": "10px",
-                    "border-bottom": "3px solid",
-                    "font-family": "Roboto,'Helvetica Neue',sans-serif"
-                }
-            }, {
-                "schema": "contact.firstName",
-                "label": "First name",
-                "componentName": "FormQLMatFormFieldComponent",
-                "type": "text",
-                "order": 1,
-                "position": {
-                    "id": "ID1_1",
-                    "index": 0,
-                    "type": 2
-                },
-                "componentId": "f3ba55e9-20b3-db67-2099-22a9108bcd47",
-                "rules": {
-                    "readonly": {
-                        "key": "readonly",
-                        "condition": "  ",
-                        "value": null
-                    },
-                    "required": {
-                        "key": "required",
-                        "condition": "true",
-                        "value": null,
-                        "errorMessage": "Please enter first name"
-                    }
-                },
-                "value": null
-            }, {
-                "schema": "contact.lastName",
-                "label": "Last Name",
-                "componentName": "FormQLMatFormFieldComponent",
-                "type": "text",
-                "order": 1,
-                "position": {
-                    "id": "ID1_2",
-                    "index": 0,
-                    "type": 2
-                },
-                "componentId": "0af1e87f-29fe-e6e0-80ca-f1d512b889ec",
-                "rules": {
-                    "required": {
-                        "key": "required",
-                        "condition": "true",
-                        "value": null
-                    }
-                },
-                "value": null
-            }, {
-                "schema": "contact.mobile",
-                "label": "Mobile",
-                "componentName": "FormQLMatFormFieldComponent",
-                "type": "text",
-                "order": 1,
-                "position": {
-                    "id": "ID2_2",
-                    "index": 0,
-                    "type": 2
-                },
-                "componentId": "bb22abb9-0fd0-fa7b-ff0a-50e2c2031970",
-                "conditions": {},
-                "rules": {},
-                "value": null
-            }, {
-                "schema": "contact.email",
-                "label": "Email",
-                "componentName": "FormQLMatFormFieldComponent",
-                "type": "text",
-                "order": 1,
-                "position": {
-                    "id": "ID2_1",
-                    "index": 0,
-                    "type": 2
-                },
-                "componentId": "776bd62b-b83a-9b67-43b9-03cf7daa2dcb",
-                "rules": {},
-                "value": null
-            }, {
-                "componentId": "842329ce-9118-8865-f71e-f8f223150a1f",
-                "label": "Add comments",
-                "componentName": "FormQLMatCheckboxComponent",
-                "position": {
-                    "id": "ID3_1",
-                    "index": 1,
-                    "type": 2
-                },
-                "rules": {},
-                "value": null,
-                "schema": "contact.addComments"
-            }, {
-                "componentId": "ba201941-0126-0427-4d73-f1c2677aec04",
-                "label": "Comments",
-                "componentName": "FormQLMatTextareaComponent",
-                "position": {
-                    "id": "ID4_1",
-                    "index": 0,
-                    "type": 2
-                },
-                "rules": {
-                    "hidden": {
-                        "key": "hidden",
-                        "condition": "typeof contact !== 'object' || (contact && contact.addComments !== true)",
-                        "value": null
-                    }
-                },
-                "value": null,
-                "schema": "contact.comments"
-            }, {
-                "componentId": "4b206429-58d0-7a41-8bfc-040cdaf81677",
-                "label": "Full Name",
-                "componentName": "FormQLMatFormFieldComponent",
-                "position": {
-                    "id": "ID3_1",
-                    "index": 0,
-                    "type": 2
-                },
-                "rules": {
-                    "readonly": {
-                        "key": "readonly",
-                        "condition": "true",
-                        "value": null
-                    },
-                    "value": {
-                        "key": "value",
-                        "condition": "(contact.firstName ? contact.firstName : '') + ' ' + (contact.lastName ? contact.lastName : '')",
-                        "value": null
-                    }
-                },
-                "action": null,
-                "schema": "contact.fullname",
-                "value": null
-            }],
-            "position": {
-                "id": "ID1_1",
-                "index": 0
-            },
-            "sectionId": "1d3fcbe3-a029-ca5e-4791-9666155fff0f",
-            "headerStyle": {
-                "font-size": "1.2rem",
-                "border-bottom": "2px solid #3F51B5",
-                "margin-bottom": "10px",
-                "color": "#3F51B5"
-            },
-            "template": {
-                "title": "header",
-                "header": {
-                    "hidden": false,
-                    "style": null,
-                    "gridTemplateColumns": "1fr",
-                    "gridTemplateAreas": "\"ID1_1\""
-                },
-                "body": {
-                    "hidden": false,
-                    "gridTemplateColumns": "1fr 1fr",
-                    "style": null,
-                    "gridTemplateRows": "",
-                    "gridTemplateAreas": "\"ID1_1 ID1_2\" \"ID2_1 ID2_2\" \"ID3_1 ID3_1\" \"ID4_1 ID4_1\""
-                },
-                "reRender": false
-            },
-            "sectionName": "Contact Information"
-        }, {
-            "components": [{
-                "schema": "contact.lastName",
-                "label": "Address",
-                "componentName": "FormQLLabelComponent",
-                "type": "text",
-                "order": 1,
-                "position": {
-                    "id": "ID1_1",
-                    "index": 2,
-                    "type": 1
-                },
-                "componentId": "0af1e87f-09fe-e6e0-80ca-f1d512b889ec",
-                "rules": {},
-                "value": null,
-                "style": {
-                    "padding": "0px",
-                    "margin": "10px",
-                    "border-bottom": "3px solid",
-                    "font-family": "Roboto,'Helvetica Neue',sans-serif"
-                }
-            }, {
-                "schema": "contact.addressLine1",
-                "label": "Line 1",
-                "componentName": "FormQLMatFormFieldComponent",
-                "type": "text",
-                "order": 1,
-                "position": {
-                    "id": "ID1_1",
-                    "index": 0,
-                    "type": 2
-                },
-                "componentId": "f3bb55e9-20b3-db67-2099-22a9108bcd47",
-                "rules": {
-                    "hidden": {
-                        "key": "hidden",
-                        "condition": "contact.fistName === ''",
-                        "value": null
-                    },
-                    "readonly": {
-                        "key": "readonly",
-                        "condition": "contact.fistName === ''",
-                        "value": null
-                    },
-                    "required": {
-                        "key": "required",
-                        "condition": "contact.fistName === ''",
-                        "value": null,
-                        "errorMessage": "bbbbbbbbbbbb"
-                    }
-                },
-                "configuration": {
-                    "test": "test"
-                },
-                "value": null
-            }, {
-                "schema": "contact.addressLine2",
-                "label": "Line 2",
-                "componentName": "FormQLMatFormFieldComponent",
-                "type": "text",
-                "order": 1,
-                "position": {
-                    "id": "ID1_1",
-                    "index": 3,
-                    "type": 2
-                },
-                "componentId": "0af1e87f-09fe-e9e0-80ca-f1d512b889ec",
-                "rules": {},
-                "value": null
-            }, {
-                "schema": "contact.addressCity",
-                "label": "City",
-                "componentName": "FormQLMatFormFieldComponent",
-                "type": "text",
-                "order": 1,
-                "position": {
-                    "id": "ID1_1",
-                    "index": 4,
-                    "type": 2
-                },
-                "componentId": "bb22abb9-0fd0-f27b-ff0a-50e2c2031970",
-                "conditions": {},
-                "rules": {},
-                "value": null
-            }, {
-                "schema": "contact.addressPostCode",
-                "label": "Postcode",
-                "componentName": "FormQLMatFormFieldComponent",
-                "type": "text",
-                "order": 1,
-                "position": {
-                    "id": "ID1_1",
-                    "index": 5,
-                    "type": 2
-                },
-                "componentId": "776bd62b-b83a-ab67-43b9-03cf7daa2dcb",
-                "rules": {},
-                "value": null
-            }],
-            "position": {
-                "id": "ID1_2",
-                "index": 0
-            },
-            "sectionId": "2d3fcbe3-a029-ca5e-4791-9666155fff0f",
-            "headerStyle": {
-                "font-size": "1.2rem",
-                "border-bottom": "2px solid #3F51B5",
-                "margin-bottom": "10px",
-                "color": "#3F51B5"
-            },
-            "template": {
-                "title": "header",
-                "header": {
-                    "gridTemplateColumns": "1fr",
-                    "gridTemplateAreas": "\"ID1_1\""
-                },
-                "body": {
-                    "gridTemplateColumns": "1fr",
-                    "gridTemplateRows": "1fr",
-                    "gridTemplateAreas": "\"ID1_1\""
-                },
-                "reRender": false
-            },
-            "sectionName": "Address Information"
-        }, {
-            "components": [{
-                "label": "Save",
-                "componentName": "FormQLMatButtonComponent",
-                "type": "text",
-                "order": 1,
-                "position": {
-                    "id": "ID1_3",
-                    "index": 0,
-                    "type": 2
-                },
-                "componentId": "786bd72b-b83a-9b67-43b9-03cf7daa2dcb",
-                "rules": {},
-                "action": {
-                    "key": "save"
-                },
-                "value": null,
-                "style": {
-                    "float": "right"
-                }
-            }],
+    "pages": [
+        {
             "structure": "12",
-            "position": {
-                "id": "ID2_2",
-                "index": 0
-            },
-            "sectionId": "3d3fcbe3-a029-ca5e-4791-9666155fff0f",
-            "headerStyle": null,
             "template": {
                 "title": "header",
-                "header": {
-                    "gridTemplateColumns": "1fr",
-                    "gridTemplateAreas": "\"ID1_1\"",
-                    "hidden": false
-                },
                 "body": {
                     "gridTemplateColumns": "1fr",
-                    "gridTemplateRows": "1fr",
-                    "gridTemplateAreas": "\"ID1_3\""
+                    "gridTemplateRows": "",
+                    "gridTemplateAreas": "\"ID1_1\" \"ID2_1\" \"ID3_1\""
                 },
                 "reRender": false
             },
-            "sectionName": ""
-        }],
-        "pageId": "f83c2ca3-1259-aa95-e817-61321a04713d"
-    }]
+            "sections": [
+                {
+                    "components": [
+                        {
+                            "label": "客户基本信息",
+                            "componentName": "FormQLLabelComponent",
+                            "type": "text",
+                            "order": 1,
+                            "position": {
+                                "id": "ID1_1",
+                                "index": 1,
+                                "type": 1
+                            },
+                            "style": {
+                                "padding": "10px",
+                                "border-bottom": "3px solid",
+                                "font-family": "Roboto,'Helvetica Neue',sans-serif",
+                                "font-weight": "bold"
+                            }
+                        },
+                        {
+                            "schema": "contact.customerName",
+                            "label": "客户名称(必填，长度2-10, 服务端校验是否唯一)",
+                            "componentName": "FormQLMatFormFieldComponent",
+                            "type": "text",
+                            "order": 1,
+                            "position": {
+                                "id": "ID1_1",
+                                "index": 0,
+                                "type": 2
+                            },
+                            "rules": [
+                                {
+                                    "key": "required",
+                                    "condition": "true"
+                                },
+                                {
+                                    "key": "maxLength",
+                                    "condition": "true",
+                                    "value": 10
+                                },
+                                {
+                                    "key": "minLength",
+                                    "condition": "true",
+                                    "value": 2
+                                },
+                                {
+                                    "key": "server",
+                                    "condition": "true",
+                                    "serverUrl": "http://mock.studyinghome.com/mock/5e78a416ef619e1977e29ad9/example/example/username/check"
+                                }
+                            ]
+                        },
+                        {
+                            "schema": "contact.contactPerson",
+                            "label": "联系人(当客户名称的长度大于3时必填)",
+                            "componentName": "FormQLMatFormFieldComponent",
+                            "type": "text",
+                            "order": 1,
+                            "position": {
+                                "id": "ID1_2",
+                                "index": 0,
+                                "type": 2
+                            },
+                            "rules": [
+                                {
+                                    "key": "required",
+                                    "condition": "contact.customerName.length > 3",
+                                    "errorMessage": "当客户名称长度大于3时，联系人必填"
+                                }
+                            ]
+                        },
+                        {
+                            "schema": "contact.password",
+                            "label": "密码(6-20位)",
+                            "class": "mobile",
+                            "componentName": "FormQLMatFormFieldComponent",
+                            "type": "password",
+                            "order": 1,
+                            "position": {
+                                "id": "ID2_1",
+                                "index": 0,
+                                "type": 2
+                            },
+                            "rules": [
+                                {
+                                    "key": "required",
+                                    "condition": "true",
+                                    "errorMessage": "请输入密码"
+                                },
+                                {
+                                    "key": "pattern",
+                                    "condition": "true",
+                                    "value": "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$",
+                                    "errorMessage": "请输入6~20位英文+数字的组合密码"
+                                }
+                            ]
+                        },
+                        {
+                            "schema": "contact.confirmPassword",
+                            "label": "确认密码(必填，与密码必须一致)",
+                            "class": "mobile",
+                            "componentName": "FormQLMatFormFieldComponent",
+                            "type": "password",
+                            "order": 1,
+                            "position": {
+                                "id": "ID2_2",
+                                "index": 0,
+                                "type": 2
+                            },
+                            "rules": [
+                                {
+                                    "key": "required",
+                                    "condition": "true",
+                                    "errorMessage": "请再次输入密码"
+                                },
+                                {
+                                    "key": "custom",
+                                    "condition": "contact.confirmPassword === contact.password",
+                                    "errorMessage": "密码输入不一致"
+                                }
+                            ]
+                        },
+                        {
+                            "schema": "contact.mobile",
+                            "label": "手机号码(必填，手机正则，手机号唯一)",
+                            "componentName": "FormQLMatFormFieldComponent",
+                            "type": "text",
+                            "order": 1,
+                            "position": {
+                                "id": "ID5_1",
+                                "index": 0,
+                                "type": 2
+                            },
+                            "rules": [
+                                {
+                                    "key": "required",
+                                    "condition": "true",
+                                    "errorMessage": "手机号码必填"
+                                },
+                                {
+                                    "key": "pattern",
+                                    "condition": "true",
+                                    "value": "^[1][1-9]{2}[1-9]{4}[1-9]{4}$"
+                                },
+                                {
+                                    "key": "server",
+                                    "condition": "true",
+                                    "serverUrl": "http://mock.studyinghome.com/mock/5e78a416ef619e1977e29ad9/example/telephone/check"
+                                }
+                            ]
+                        },
+                        {
+                            "schema": "contact.email",
+                            "label": "邮箱地址(必填，email正则)",
+                            "componentName": "FormQLMatFormFieldComponent",
+                            "type": "text",
+                            "order": 1,
+                            "position": {
+                                "id": "ID5_2",
+                                "index": 0,
+                                "type": 2
+                            },
+                            "rules": [
+                                {
+                                    "key": "required",
+                                    "condition": "true"
+                                },
+                                {
+                                    "key": "pattern",
+                                    "condition": "true",
+                                    "value": "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$"
+                                }
+                            ]
+                        },
+                        {
+                            "schema": "contact.addComments",
+                            "componentId": "842329ce-9118-8865-f71e-f8f223150a1f",
+                            "label": "添加备注",
+                            "componentName": "FormQLMatCheckboxComponent",
+                            "position": {
+                                "id": "ID3_1",
+                                "index": 1,
+                                "type": 2
+                            },
+                            "rules": []
+                        },
+                        {
+                            "schema": "contact.comments",
+                            "label": "备注(添加备注为true时出现，反正隐藏)",
+                            "componentName": "FormQLMatTextareaComponent",
+                            "position": {
+                                "id": "ID4_1",
+                                "index": 0,
+                                "type": 2
+                            },
+                            "rules": [
+                                {
+                                    "key": "hidden",
+                                    "condition": "typeof contact !== 'object' || (contact && contact.addComments !== true)",
+                                    "value": null
+                                },
+                                {
+                                    "key": "required",
+                                    "condition": "typeof contact === 'object' && (contact && contact.addComments === true)"
+                                },
+                                {
+                                    "key": "maxLength",
+                                    "condition": "typeof contact === 'object' && (contact && contact.addComments === true)",
+                                    "value": 40
+                                },
+                                {
+                                    "key": "minLength",
+                                    "condition": "typeof contact === 'object' && (contact && contact.addComments == true)",
+                                    "value": 6
+                                }
+                            ]
+                        }
+                    ],
+                    "position": {
+                        "id": "ID1_1",
+                        "index": 0
+                    },
+                    "sectionId": "1d3fcbe3-a029-ca5e-4791-9666155fff0f",
+                    "headerStyle": {
+                        "font-size": "1.2rem",
+                        "border-bottom": "2px solid #3F51B5",
+                        "margin-bottom": "10px",
+                        "color": "#3F51B5"
+                    },
+                    "template": {
+                        "title": "header",
+                        "header": {
+                            "hidden": false,
+                            "style": null,
+                            "gridTemplateColumns": "1fr",
+                            "gridTemplateAreas": "\"ID1_1\""
+                        },
+                        "body": {
+                            "hidden": false,
+                            "gridTemplateColumns": "1fr 1fr",
+                            "style": null,
+                            "gridTemplateRows": "",
+                            "gridTemplateAreas": "\"ID1_1 ID1_2\" \"ID2_1 ID2_2\" \"ID5_1 ID5_2\" \"ID3_1 ID3_1\" \"ID4_1 ID4_1\""
+                        },
+                        "reRender": false
+                    },
+                    "sectionName": "Contact Information"
+                },
+                {
+                    "components": [
+                        {
+                            "schema": "contact.productName",
+                            "label": "产品信息",
+                            "componentName": "FormQLLabelComponent",
+                            "type": "text",
+                            "order": 1,
+                            "position": {
+                                "id": "ID1_1",
+                                "index": 2,
+                                "type": 1
+                            },
+                            "style": {
+                                "border-bottom": "3px solid",
+                                "font-family": "Roboto,'Helvetica Neue',sans-serif",
+                                "font-weight": "bold"
+                            }
+                        },
+                        {
+                            "schema": "contact.goodCategory",
+                            "label": "商品分类(必填)",
+                            "componentName": "FormQLMatSelectComponent",
+                            "order": 1,
+                            "position": {
+                                "id": "ID1_1",
+                                "type": 2
+                            },
+                            "rules": [
+                                {
+                                    "key": "required",
+                                    "condition": "true",
+                                    "errorMessage": "请选择商品分类"
+                                }
+                            ],
+                            "configuration": [
+                                {
+                                    "name": "应用",
+                                    "value": "app"
+                                },
+                                {
+                                    "name": "服务",
+                                    "value": "service"
+                                },
+                                {
+                                    "name": "套装软件",
+                                    "value": "package"
+                                }
+                            ]
+                        },
+                        {
+                            "schema": "contact.goodCode",
+                            "label": "商品名称(必填，没有选择任何分类时只读)",
+                            "componentName": "FormQLMatSelectComponent",
+                            "order": 1,
+                            "type": "select",
+                            "position": {
+                                "id": "ID1_3",
+                                "type": 2
+                            },
+                            "rules": [
+                                {
+                                    "key": "required",
+                                    "condition": "true"
+                                },
+                                {
+                                    "key": "readonly",
+                                    "condition": "!contact.goodCategory"
+                                }
+                            ],
+                            "dataSource": "api",
+                            "apiAddress": "/mock/5e7da3cbe76767446b4c28c0/example/goodcategory/${contact.goodCategory}/list",
+                            "configuration": []
+                        },
+                        {
+                            "schema": "contact.delivery",
+                            "label": "交期(必填)",
+                            "componentName": "FormQLMatDatepickerComponent",
+                            "type": "date",
+                            "order": 1,
+                            "position": {
+                                "id": "ID2_1",
+                                "index": 0,
+                                "type": 2
+                            },
+                            "rules": [
+                                {
+                                    "key": "required",
+                                    "condition": "true"
+                                },
+                                {
+                                    "key": "date",
+                                    "disableDateStart": -1,
+                                    "disableDateEnd": "2020-04-30"
+                                }
+                            ],
+                            "params": {
+                                "startView": "month"
+                            }
+                        },
+                        {
+                            "schema": "contact.price",
+                            "label": "单价(必填，0.1~999, 字体颜色随商品分类变化)",
+                            "componentName": "FormQLMatFormFieldComponent",
+                            "type": "number",
+                            "order": 1,
+                            "position": {
+                                "id": "ID2_3",
+                                "type": 2
+                            },
+                            "rules": [
+                                {
+                                    "key": "required",
+                                    "condition": "true"
+                                },
+                                {
+                                    "key": "max",
+                                    "condition": "true",
+                                    "value": 999
+                                },
+                                {
+                                    "key": "min",
+                                    "condition": "true",
+                                    "value": 0.1
+                                },
+                                {
+                                    "key": "style",
+                                    "condition": "contact.goodCategory === 'app' ? 'red': (contact.goodCategory === 'service' ? 'orange': (contact.goodCategory === 'package' ? 'green': '' ))"
+                                }
+                            ]
+                        },
+                        {
+                            "schema": "contact.count",
+                            "label": "数量(必填， 1~999999)",
+                            "componentName": "FormQLMatFormFieldComponent",
+                            "type": "number",
+                            "order": 1,
+                            "position": {
+                                "id": "ID2_2",
+                                "type": 2
+                            },
+                            "rules": [
+                                {
+                                    "key": "required",
+                                    "condition": "true"
+                                },
+                                {
+                                    "key": "max",
+                                    "condition": "true",
+                                    "value": 999999
+                                },
+                                {
+                                    "key": "min",
+                                    "condition": "true",
+                                    "value": 1
+                                },
+                                {
+                                    "key": "style",
+                                    "condition": "contact.goodCategory === 'app' ? 'red': (contact.goodCategory === 'service' ? 'orange': (contact.goodCategory === 'package' ? 'green': '' ))"
+                                }
+                            ]
+                        },
+                        {
+                            "schema": "contact.money",
+                            "label": "总金额(只读，值 = 数量*单价)",
+                            "componentName": "FormQLMatFormFieldComponent",
+                            "type": "number",
+                            "order": 1,
+                            "position": {
+                                "id": "ID2_4",
+                                "type": 2
+                            },
+                            "rules": [
+                                {
+                                    "key": "readonly",
+                                    "condition": "true"
+                                },
+                                {
+                                    "key": "value",
+                                    "condition": "contact.count*contact.price"
+                                },
+                                {
+                                    "key": "style",
+                                    "condition": "contact.goodCategory === 'app' ? 'red': (contact.goodCategory === 'service' ? 'orange': (contact.goodCategory === 'package' ? 'green': '' ))"
+                                }
+                            ]
+                        }
+                    ],
+                    "position": {
+                        "id": "ID2_1",
+                        "index": 0
+                    },
+                    "sectionId": "2d3fcbe3-a029-ca5e-4791-9666155fff0f",
+                    "headerStyle": {
+                        "font-size": "1.2rem",
+                        "border-bottom": "2px solid #3F51B5",
+                        "margin-bottom": "10px",
+                        "color": "#3F51B5"
+                    },
+                    "template": {
+                        "title": "header",
+                        "header": {
+                            "gridTemplateColumns": "1fr",
+                            "gridTemplateAreas": "\"ID1_1\""
+                        },
+                        "body": {
+                            "gridTemplateColumns": "1fr 1fr 1fr 1fr",
+                            "gridTemplateRows": "1fr",
+                            "gridTemplateAreas": "\"ID1_1 ID1_1 ID1_3 ID1_3\" \"ID2_1 ID2_2 ID2_3 ID2_4\""
+                        },
+                        "reRender": false
+                    },
+                    "sectionName": "Address Information"
+                },
+                {
+                    "components": [
+                        {
+                            "label": "校验并保存",
+                            "componentName": "FormQLMatButtonComponent",
+                            "type": "text",
+                            "order": 1,
+                            "position": {
+                                "id": "ID1_3",
+                                "index": 0,
+                                "type": 2
+                            },
+                            "action": {
+                                "key": "validateAndSave"
+                            },
+                            "style": {
+                                "float": "right"
+                            }
+                        }
+                    ],
+                    "structure": "12",
+                    "position": {
+                        "id": "ID3_1",
+                        "index": 0
+                    },
+                    "sectionId": "3d3fcbe3-a029-ca5e-4791-9666155fff0f",
+                    "headerStyle": null,
+                    "template": {
+                        "title": "header",
+                        "header": {
+                            "gridTemplateColumns": "1fr",
+                            "gridTemplateAreas": "\"ID1_1\"",
+                            "hidden": false
+                        },
+                        "body": {
+                            "gridTemplateColumns": "1fr",
+                            "gridTemplateRows": "1fr",
+                            "gridTemplateAreas": "\"ID1_3\""
+                        },
+                        "reRender": false
+                    },
+                    "sectionName": ""
+                }
+            ],
+            "pageId": "f83c2ca3-1259-aa95-e817-61321a04713d"
+        }
+    ]
 }

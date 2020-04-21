@@ -7,7 +7,7 @@ import { FormQLMode } from '../models/type.model';
 @Component({
     // tslint:disable-next-line: component-selector
     selector: '[formql-page-wrapper]',
-    template: `<div class="fql-page-body">
+    template: `<div class="fql-page-body {{page.className}}">
                 <ng-template formqlGdConfig [formqlGdConfigOf]="page.template.body" let-bodyitem let-i="index">
                     <div formql-page-container class="fql-section-container"
                         [positionId]="bodyitem.id"
@@ -29,4 +29,8 @@ export class PageWrapperComponent {
 
     error: string;
     row: any;
+
+    public ngOnInit(): void {
+        // console.warn(this.page); 
+    }
 }

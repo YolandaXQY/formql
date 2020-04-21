@@ -17,20 +17,6 @@
     "lib": [
       "es2017",
       "dom"
-    ],
-    "paths": {
-      "@formql/core": [
-        "dist/formql"
-      ],
-      "@formql/editor": [
-        "dist/editor"
-      ],
-      "material": [
-        "dist/material"
-      ],
-      "material/*": [
-        "dist/material/*"
-      ]
-    }
+    ]
   }
 }

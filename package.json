@@ -35,9 +35,6 @@
     "@angular/platform-browser": "~8.2.4",
     "@angular/platform-browser-dynamic": "~8.2.4",
     "@angular/router": "~8.2.4",
-    "@formql/core": "0.4.0",
-    "@formql/editor": "0.4.0",
-    "@formql/material": "0.4.0",
     "angular2-text-mask": "^9.0.0",
     "angular2-uuid": "^1.1.1",
     "classlist.js": "^1.1.20150312",
@@ -45,7 +42,10 @@
     "rxjs": "~6.3.3",
     "text-mask-addons": "^3.8.0",
     "web-animations-js": "^2.3.1",
-    "zone.js": "^0.8.26"
+    "zone.js": "^0.8.26",
+    "ngx-echarts": "^4.2.2",
+    "ng-zorro-antd": "^8.0.0",
+    "echarts": "^4.6.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.803.2",
@@ -56,7 +56,6 @@
     "@types/jest": "^24.0.18",
     "@types/node": "~8.9.4",
     "codelyzer": "~4.5.0",
-    "cypress": "^3.4.1",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "jest": "^24.8.0",

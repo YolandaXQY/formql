@@ -2,7 +2,8 @@ export enum FormActionType {
     Validate = 'validate',
     ValidateAndSave = 'validateAndSave',
     Save = 'save',
-    Custom = 'custom'
+    Custom = 'custom',
+    Switch = 'Switch'
 }
 
 export interface FormAction {

@@ -1,5 +1,6 @@
 import { Injectable, ComponentFactoryResolver, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { map, filter, startWith} from 'rxjs/operators';
 import { FormError, FormState } from '../models/form-window.model';
 import { FormService } from './form.service';
 import { FormComponent, ComponentControl } from '../models/form-component.model';
@@ -42,34 +43,52 @@ export class StoreService implements OnDestroy {
         return this.formState$.asObservable();
     }
 
+    updateFormData(data: any): void {
+        this.formState.data = data;
+        this.formState$.next(this.formState);
+        this.formState.components.forEach(component => {
+           this.formState.components.forEach((c: FormComponent<any>) => {
+                if (c.schema === component.schema || (c.schema && c.schema.indexOf('.') === -1)) {
+                    c.value = this.formService.getValue(c.schema, this.formState.data, c.type);
+                    this.formState.data = this.formService.setValue(c.schema, c.value, this.formState.data);
+                }
+            });
+        });
+        // 初始化值后需要更新校验。在layout执行完现在也会执行一次重置校验。
+        this.formControls = this.formService.resetValidators(this.formState, this.formControls);
+    }
+
     setComponet(component: FormComponent<any>) {
         this.formState = this.formService.updateComponent(component, this.formState);
-        this.formControls = HelperService.resetValidators(this.formState.components, this.formControls, this.componentFactoryResolver);
+        this.formControls = this.formService.resetValidators(this.formState, this.formControls);
         this.data$.next(this.formState.data);
     }
 
-    getAll(formName: string, ids: Array<string>) {
-        this.formService.getFormAndData(formName, ids).pipe(takeUntil(this.serviceDestroyed)).subscribe(response => {
-            this.formState = {...response};
+    getAll(ids: Array<string>, structureData: any, data: any, formName: string) {
+        this.formService.getFormAndData(structureData, data, formName).pipe(takeUntil(this.serviceDestroyed)).subscribe(response => {
+            this.formState = { ...response };
             this.formState.ids = ids;
             if (this.formState.form.pages != null && this.formState.form.pages.length > 0) {
                 const reactiveFormStructure = HelperService.createReactiveFormStructure(this.formState.form);
                 this.formControls = reactiveFormStructure.formControls;
-                this.formState.reactiveForm =  this.formBuilder.group(reactiveFormStructure.pageGroup);
+                this.formState.reactiveForm = this.formBuilder.group(reactiveFormStructure.pageGroup);
+                this.formControls = this.formService.resetValidators(this.formState, this.formControls);
+                // this.validateForm();
+               
                 this.formState$.next(this.formState);
             }
             this.data$.next(response.data);
         },
-        error => {
-            this.formState$.next(<FormState> {
-                form: {
-                    error: HelperService.formatError(<FormError>{
-                    title: 'Error loading form or data',
-                    error: error
-                    })
-                }
+            error => {
+                this.formState$.next({
+                    form: {
+                        error: HelperService.formatError({
+                            title: 'Error loading form or data',
+                            error
+                        } as FormError)
+                    }
+                } as FormState);
             });
-        });
     }
 
     saveForm() {
@@ -77,7 +96,8 @@ export class StoreService implements OnDestroy {
     }
 
     saveData() {
-        return this.formService.saveData(this.formState.form.dataSource, this.formState.ids, this.formState.data);
+        return this.formState.data;
+        // return this.formService.saveData(this.formState.form.dataSource, this.formState.ids, this.formState.data);
     }
 
     validateForm() {
@@ -85,7 +105,11 @@ export class StoreService implements OnDestroy {
     }
 
     isFormValid() {
-        return this.formState.reactiveForm.valid;
+        return this.formState.reactiveForm.statusChanges.pipe(
+            startWith(this.formState.reactiveForm.status),
+            filter(status => status !== 'PENDING'),
+            map(status => status === 'VALID' ? true : false)
+        )
     }
 
     unsubscribeAll() {
@@ -97,20 +121,21 @@ export class StoreService implements OnDestroy {
         switch (eventType) {
             case InternalEventType.EditingForm:
                 this.populateReactiveForm();
-            break;
+                break;
 
             case InternalEventType.DndFormChanged:
-                const pageId = (<FormPage>event).pageId;
+                const pageId = (event as FormPage).pageId;
                 const indexDnd = this.formState.form.pages.findIndex(p => p.pageId === pageId);
 
-                if (indexDnd >= 0)
+                if (indexDnd >= 0) {
                     this.formState.form.pages[indexDnd] = event;
+                }
 
                 this.populateReactiveForm();
-            break;
+                break;
 
             case InternalEventType.RemoveComponent:
-                const componentId = (<FormComponent<any>>event).componentId;
+                const componentId = (event as FormComponent<any>).componentId;
                 let updateSectionId = '';
                 this.formState.form.pages.forEach(page => {
                     page.sections.forEach(section => {
@@ -122,10 +147,10 @@ export class StoreService implements OnDestroy {
                     });
                 });
                 this.populateReactiveForm();
-            break;
+                break;
 
             case InternalEventType.RemoveSection:
-                const sectionId = (<FormSection>event).sectionId;
+                const sectionId = (event as FormSection).sectionId;
                 let updatePageId = '';
                 this.formState.form.pages.forEach(page => {
                     const indexSection = page.sections.findIndex(c => c.sectionId === sectionId);
@@ -135,13 +160,13 @@ export class StoreService implements OnDestroy {
                     }
                 });
                 this.populateReactiveForm();
-            break;
+                break;
         }
     }
 
-    private populateReactiveForm()  {
+    private populateReactiveForm() {
         if (this.formState.form.pages != null && this.formState.form.pages.length > 0) {
-            // get reactive structure -> formControls, pageGroup and components if it's an update
+            // 得到反应结构 -> 窗体控件/叶组和组件（如果是更新）
             const reactiveFormStructure = HelperService.createReactiveFormStructure(this.formState.form, true);
             this.formControls = reactiveFormStructure.formControls;
 
@@ -150,9 +175,10 @@ export class StoreService implements OnDestroy {
                 this.formState.reactiveForm.setControl(page.pageId, reactiveFormStructure.pageGroup[page.pageId]);
             });
             this.formState.form = HelperService.updateTemplates(this.formState.form);
-            if (reactiveFormStructure.components != null && reactiveFormStructure.components.length > 0)
-                this.formControls = HelperService.resetValidators(reactiveFormStructure.components,
-                            this.formControls, this.componentFactoryResolver);
+            if (reactiveFormStructure.components != null && reactiveFormStructure.components.length > 0) {
+                this.formControls = this.formService.resetValidators(this.formState, this.formControls);
+            }
         }
     }
-}
+
+};

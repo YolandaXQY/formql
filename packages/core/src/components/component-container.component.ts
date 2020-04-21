@@ -43,8 +43,9 @@ export class ComponentContainerComponent implements OnInit, OnDestroy {
     @Input() sectionId: string;
     @Input()
     set value(value: any) {
-        if (this.reactiveSection && this.component && this.reactiveSection.controls[this.component.componentId].value !== value)
+        if (this.reactiveSection && this.component && this.reactiveSection.controls[this.component.componentId].value !== value) {
             this.reactiveSection.controls[this.component.componentId].setValue(value);
+        }
     }
 
     @Input() mode: FormQLMode;
@@ -62,13 +63,12 @@ export class ComponentContainerComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit() {
+        // console.warn(this.component);
         const component = this.viewContainerRef.createComponent(
             HelperService.getFactory(this.componentFactoryResolver, this.component.componentName));
-        (<any>component).instance.field = this.component;
-        (<any>component).instance.formControl = this.reactiveSection.controls[this.component.componentId];
-
+        (component as any).instance.field = this.component;
+        (component as any).instance.formControl = this.reactiveSection.controls[this.component.componentId];
         this.content.insert(component.hostView);
-
         this.formSubscription$ = this.reactiveSection.controls[this.component.componentId].valueChanges.subscribe((change) => {
             if (this.component.value !== change) {
                 this.component.value = change;
@@ -79,16 +79,17 @@ export class ComponentContainerComponent implements OnInit, OnDestroy {
         if (this.mode === FormQLMode.Edit) {
             const tooltip = this.viewContainerRef.createComponent(
                 HelperService.getFactory(this.componentFactoryResolver, 'TooltipComponent'));
-            (<any>tooltip).instance.wrapper = this.wrapper;
-            (<any>tooltip).instance.type = ContainerType.Component;
-            (<any>tooltip).instance.object = this.component;
+            (tooltip as any).instance.wrapper = this.wrapper;
+            (tooltip as any).instance.type = ContainerType.Component;
+            (tooltip as any).instance.object = this.component;
             this.tooltip.insert(tooltip.hostView);
         }
     }
 
     editField() {
-        if (this.mode === FormQLMode.Edit)
+        if (this.mode === FormQLMode.Edit) {
             this.eventHandlerService.send(InternalEventType.EditingComponent, this.component);
+        }
     }
 
     ngOnDestroy(): void {

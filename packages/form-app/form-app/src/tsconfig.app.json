@@ -2,8 +2,20 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "outDir": "../out-tsc/app",
+    "baseUrl": "./",
     "module": "es2015",
-    "types": []
+    "types": [],
+    "paths": {
+      "@formql/core": [
+        "../../../core/src/public_api"
+      ],
+      "@formql/editor": [
+        "../../../editor/src/public_api"
+      ],
+      "@formql/material": [
+        "../../../material/src/public_api"
+      ]
+    }
   },
   "exclude": [
     "src/test.ts",

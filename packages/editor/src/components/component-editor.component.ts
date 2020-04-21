@@ -57,7 +57,7 @@ export class ComponentEditorComponent implements OnInit {
 
     getEvaluatedValue(condition) {
         const response = HelperService.evaluateValue(condition, this.data);
-        return response.value;
+        return response.value ? true : false;
     }
 
     getEvaluatedCondition(condition) {
@@ -103,12 +103,17 @@ export class ComponentEditorComponent implements OnInit {
 
         this.validators.forEach(v => {
             if (!this.updatedComponent.rules)
-                this.updatedComponent.rules = <FormRules>{};
+            // xuqingyu 2020/4/1 为了formRule变成数字修改,因为暂时没有使用editor所以不知道有没有其他错误
+                this.updatedComponent.rules = <Array<FormRule>>[];
 
-            const item = this.updatedComponent.rules[v.key];
+            const item = this.updatedComponent.rules.find(d => d.key === v.key);
+                
+            // const item = this.updatedComponent.rules[v.key];
             if (item === undefined) {
-                this.updatedComponent.rules[v.key] = <FormRule>{ key: v.key, condition: '' };
-                this.rules.push(this.updatedComponent.rules[v.key]);
+                this.updatedComponent.rules.push(<FormRule>{ key: v.key, condition: '' });
+                this.rules.push(this.updatedComponent.rules[this.updatedComponent.rules.length - 1]);
+                // this.updatedComponent.rules[v.key] = <FormRule>{ key: v.key, condition: '' };
+                // this.rules.push(this.updatedComponent.rules[v.key]);
             } else
                 this.rules.push(item);
         });

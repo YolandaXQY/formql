@@ -5,9 +5,10 @@ import { FormComponent } from '../models/form-component.model';
 
 @Component({
     selector: 'formql-label',
-    template: `<div *ngIf="field">
-                <label>{{field.label}}</label>
-            </div>`,
+    template: `<p>
+    <span style="display: inline-block;min-width: 88px;">{{field.label}}:</span>
+    <i class="{{field.className}}">{{field.value}}</i>
+  </p>`,
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
@@ -32,6 +33,10 @@ export class FormQLLabelComponent implements ControlValueAccessor {
     private _propagateChange = (_: any) => { };
 
     constructor() {
+    }
+
+    ngOnInit(): void {
+        // console.warn(this.field);
     }
 
     get value(): any {

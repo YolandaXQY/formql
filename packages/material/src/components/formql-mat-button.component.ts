@@ -4,10 +4,15 @@ import { FormComponent, FormAction, FormActionType, ActionHandlerService } from 
 
 @Component({
     selector: 'formql-mat-button',
-    template: `<button mat-flat-button color="primary" class="float-right" (click)="onClick()"
-                [type]="field.type"
-                [disabled]="formControl.disabled ||
-                    (field.type === 'submit' && formControl.parent.parent.parent.invalid) ? true : null">{{field.label}}</button>`,
+    styleUrls: ['./formql-mat-button.component.less'],
+    template:
+    `<button nz-button nzType="primary" (click)="onClick()">
+        {{field.label}}
+    </button>`,
+    // `<button mat-flat-button color="primary" class="float-right" class="normal {{field.className}}"
+    //             [type]="field.type" (click)="onClick()"
+    //             [disabled]="formControl.disabled ||
+    //                 (field.type === 'submit' && formControl.parent.parent.parent.invalid) ? true : null">{{field.label}}</button>`,
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
@@ -26,9 +31,9 @@ export class FormQLMatButtonComponent implements ControlValueAccessor {
     static formQLComponent = true;
     static validators = [];
     static actions = [
-        <FormAction>{
+        {
             key: FormActionType.Save
-        }
+        } as FormAction
     ];
 
     @Input() field: FormComponent<any>;
@@ -53,8 +58,9 @@ export class FormQLMatButtonComponent implements ControlValueAccessor {
     }
 
     writeValue(value: string): void {
-        if (value)
+        if (value) {
             this._value = value;
+        }
     }
 
     registerOnChange(fn: any): void {
@@ -64,8 +70,9 @@ export class FormQLMatButtonComponent implements ControlValueAccessor {
     registerOnTouched(fn: any): void { }
 
     onClick() {
-        if (this.field.action)
+        if (this.field.action) {
             this.actionHandlerService.send(this.field.action);
+        }
     }
 
 }
